@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { ParamsTable } from './QueryTable/ParamsTable';
+import { HeaderTable } from './QueryTable/HeaderTable';
 
 export const QueryInfoPanel = () => {
 	return (
@@ -27,8 +28,12 @@ export const QueryInfoPanel = () => {
 			<TabsContent value='param' className='m-0'>
 				<ParamsTable />
 			</TabsContent>
-			<TabsContent value='header'>Заголовки</TabsContent>
-			<TabsContent value='body'>Тело</TabsContent>
+			<TabsContent value='header' className='m-0'>
+				<HeaderTable />
+			</TabsContent>
+			<TabsContent value='body' className='m-0'>
+				Тело
+			</TabsContent>
 		</Tabs>
 	);
 };

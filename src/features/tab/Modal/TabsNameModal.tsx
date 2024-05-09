@@ -4,6 +4,7 @@ import { memo, useEffect, useState } from 'react';
 import { saveCurrentTab } from '@/entities/tab/model/TabSlice';
 import { setQuery, setName as st } from '@/entities/query/model/QuerySlice';
 import { InputModal } from './InputModal';
+import { ArchiveIcon } from '@radix-ui/react-icons';
 
 export const TabsNameModal = memo(() => {
 	const dispatch = useAppDispatch();
@@ -55,7 +56,7 @@ export const TabsNameModal = memo(() => {
 			title='Введите имя'
 			placeholder='Введите название файла'
 		>
-			<Button>Сохранить</Button>
+			<ArchiveIcon />
 		</InputModal>
 	);
 });

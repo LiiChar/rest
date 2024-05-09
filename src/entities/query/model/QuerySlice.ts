@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+	AddHeaderActionPayload,
 	AddParamActionPayload,
 	ChangeMethodActionPayload,
 	ChangeQueryActionPayload,
@@ -16,6 +17,12 @@ export type Param = {
 	value: string;
 };
 
+export type Header = {
+	index: number;
+	key: string;
+	value: string;
+};
+
 export interface QueryState {
 	name: string | null;
 	query: string;
@@ -23,7 +30,7 @@ export interface QueryState {
 	method: Method;
 	response: string;
 	loading: boolean;
-	header: Record<string, string>;
+	header: Header[];
 }
 
 export const initialState: QueryState = {
@@ -54,7 +61,28 @@ export const initialState: QueryState = {
 	method: 'GET',
 	response: '',
 	loading: false,
-	header: {},
+	header: [
+		{
+			index: 0,
+			key: '',
+			value: '',
+		},
+		{
+			index: 1,
+			key: '',
+			value: '',
+		},
+		{
+			index: 2,
+			key: '',
+			value: '',
+		},
+		{
+			index: 3,
+			key: '',
+			value: '',
+		},
+	],
 } satisfies QueryState as QueryState;
 
 export const querySlice = createSlice({
@@ -73,10 +101,15 @@ export const querySlice = createSlice({
 		setName: (state, action: SetNameActionPayload) => {
 			state.name = action.payload;
 		},
+		addHeader: (state, action: AddHeaderActionPayload) => {
+			const { index } = action.payload;
+			state.header[index] = action.payload;
+
+			state.header = [...state.header];
+		},
 		addParam: (state, action: AddParamActionPayload) => {
 			const { index } = action.payload;
 			state.params[index] = action.payload;
-			console.log(state.params);
 
 			state.params = [...state.params];
 			state.query = addParams(state.query, state.params);
@@ -106,6 +139,12 @@ export const querySlice = createSlice({
 	},
 });
 
-export const { addParam, setName, changeQuery, changeMethod, setQuery } =
-	querySlice.actions;
+export const {
+	addParam,
+	setName,
+	addHeader,
+	changeQuery,
+	changeMethod,
+	setQuery,
+} = querySlice.actions;
 export default querySlice.reducer;

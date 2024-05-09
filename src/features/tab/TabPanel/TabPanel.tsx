@@ -5,6 +5,7 @@ import { TabsNameModal } from '../Modal/TabsNameModal';
 import { NewTabModal } from '../Modal/NewTabModal';
 import { changeCurrentTab } from '@/entities/tab/model/TabSlice';
 import { setQuery } from '@/entities/query/model/QuerySlice';
+import { Button } from '@/shared/ui/button';
 
 export const TabPanel = memo(() => {
 	const { currentTab, queries } = useAppSelector(state => state.tab);
@@ -18,24 +19,36 @@ export const TabPanel = memo(() => {
 	};
 
 	return (
-		<section className='flex'>
-			<div className='w-16 h-16'>
-				<NewTabModal />
+		<section className='flex text-sm h-8 justify-between gap-0 items-center'>
+			<div className='m-1 h-full py-1'>
+				<Button className='h-full p-0 px-1 rounded-r-none'>
+					<NewTabModal />
+				</Button>
 			</div>
-			{currentTab == null && <div>(без названия)</div>}
-			{queries.map((query, i) => (
-				<div
-					onClick={() => handleCurrentTab(i)}
-					className={cn([
-						'bg-secondary w-min text-nowrap',
-						query.name == currentTab?.name && 'bg-accent',
-					])}
-					key={query.query + query.name}
-				>
-					{query.method} {query.name}
-				</div>
-			))}
-			<TabsNameModal />
+			<div className='w-full flex justify-between gap-1 overflow-x-auto items-center'>
+				{currentTab == null && (
+					<div className='bg-secondary min-w-min h-full w-full text-center text-nowrap'>
+						(без названия)
+					</div>
+				)}
+				{queries.map((query, i) => (
+					<div
+						onClick={() => handleCurrentTab(i)}
+						className={cn([
+							'bg-secondary h-full min-w-min w-full text-center text-nowrap',
+							query.name == currentTab?.name && 'bg-accent',
+						])}
+						key={query.query + query.name}
+					>
+						{query.method} {query.name}
+					</div>
+				))}
+			</div>
+			<div className='h-full py-1'>
+				<Button className='h-full p-0 px-1 rounded-l-none'>
+					<TabsNameModal />
+				</Button>
+			</div>
 		</section>
 	);
 });
